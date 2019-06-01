@@ -44,7 +44,7 @@ var Widget = new Lang.Class({
         this.ui = {};
         this.ui.intel = new PopupMenu.PopupMenuItem(_("Intel"));
         this.ui.intel.connect('activate', Lang.bind(this, this._handle_menu_item_click, 'intel'));
-        this.ui.nvidia = new PopupMenu.PopupMenuItem(_("NVidia"));
+        this.ui.nvidia = new PopupMenu.PopupMenuItem(_("NVIDIA"));
         this.ui.nvidia.connect('activate', Lang.bind(this, this._handle_menu_item_click, 'nvidia'));
         this.ui.message = new PopupMenu.PopupMenuItem(_("Please log out and log back\nin to apply the changes"));
         this.ui.message.setSensitive(false);
