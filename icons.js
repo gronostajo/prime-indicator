@@ -16,6 +16,6 @@ const DEFAULT = 'prime-menu-default-symbolic';
  *
  * @return {Void}
  */
-const init = function() {
+var init = function() {
     IconTheme.get_default().append_search_path(Me.path + '/assets');
 }
