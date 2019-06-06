@@ -21,18 +21,15 @@ const _ = Translation.translate;
  * @param  {Object}
  * @return {Object}
  */
-var Widget = new Lang.Class({
-
-    Name: 'PrimeIndicator.Menu.Widget',
-    Extends: PopupMenu.PopupSubMenuMenuItem,
+class Widget extends PopupMenu.PopupSubMenuMenuItem {
 
     /**
      * Constructor
      *
      * @return {Void}
      */
-    _init: function() {
-        this.parent(_("Prime Select"), true);
+    constructor() {
+        super(_("Prime Select"), true);
 
         this.settings = Settings.settings();
         this.settings.connect('changed', Lang.bind(this, this._handle_settings));
@@ -59,18 +56,18 @@ var Widget = new Lang.Class({
         Main.panel.statusArea.aggregateMenu.menu.addMenuItem(this, items.length - 1);
 
         this._refresh();
-    },
+    }
 
     /**
      * Destructor
      *
      * @return {Void}
      */
-    destroy: function() {
+    destroy() {
         this.switch.destroy();
         this.settings.run_dispose();
         this.parent();
-    },
+    }
 
     /**
      * Refresh widget menu:
@@ -79,7 +76,7 @@ var Widget = new Lang.Class({
      *
      * @return {Void}
      */
-    _refresh: function() {
+    _refresh() {
         let gpu = this.switch.gpu;
         let query = this.switch.query;
         let commands = this.switch.commands;
@@ -89,7 +86,7 @@ var Widget = new Lang.Class({
         this.ui.nvidia.setSensitive(commands.sudo && commands.prime);
         this.ui.nvidia.setOrnament(query === 'nvidia' ? PopupMenu.Ornament.CHECK : PopupMenu.Ornament.NONE);
         this.ui.message.actor.visible = gpu !== query && commands.prime && commands.glxinfo;
-    },
+    }
 
     /**
      * Settings changed event handler
@@ -98,9 +95,9 @@ var Widget = new Lang.Class({
      * @param  {String} key
      * @return {Void}
      */
-    _handle_settings: function(actor, key) {
+    _handle_settings(actor, key) {
         // pass
-    },
+    }
 
     /**
      * Menu item click event handler
@@ -110,12 +107,12 @@ var Widget = new Lang.Class({
      * @param  {String} gpu
      * @return {Void}
      */
-    _handle_menu_item_click: function(actor, event, gpu) {
+    _handle_menu_item_click(actor, event, gpu) {
         if (actor._ornament !== PopupMenu.Ornament.NONE)
             return;
 
         this.switch.switch(gpu, this.settings.get_boolean('auto-logout'));
-    },
+    }
 
     /**
      * Prime switch gpu change event handler
@@ -124,10 +121,10 @@ var Widget = new Lang.Class({
      * @param  {String} gpu
      * @return {Void}
      */
-    _handle_prime_gpu_change: function(actor, gpu) {
+    _handle_prime_gpu_change(actor, gpu) {
         this._refresh();
-    },
+    }
 
     /* --- */
 
-});
+};
