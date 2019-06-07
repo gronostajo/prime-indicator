@@ -81,9 +81,9 @@ class Widget extends PopupMenu.PopupSubMenuMenuItem {
         let query = this.switch.query;
         let commands = this.switch.commands;
 
-        this.ui.intel.setSensitive(commands.sudo && commands.prime);
+        this.ui.intel.setSensitive(commands.prime);
         this.ui.intel.setOrnament(query === 'intel' ? PopupMenu.Ornament.CHECK : PopupMenu.Ornament.NONE);
-        this.ui.nvidia.setSensitive(commands.sudo && commands.prime);
+        this.ui.nvidia.setSensitive(commands.prime);
         this.ui.nvidia.setOrnament(query === 'nvidia' ? PopupMenu.Ornament.CHECK : PopupMenu.Ornament.NONE);
         this.ui.message.actor.visible = gpu !== query && commands.prime && commands.glxinfo;
     }

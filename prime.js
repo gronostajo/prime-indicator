@@ -55,7 +55,6 @@ class Switch {
      */
     _commands() {
         this.commands = {
-            sudo: this._which('pkexec') || this._which('gksudo'),
             bash: this._which('bash'),
             glxinfo: this._which('glxinfo'),
             prime: this._which('prime-select'),
@@ -63,7 +62,6 @@ class Switch {
             switch: Me.path + '/prime-proxy',
         }
 
-        if (!this.commands.sudo) this._log('can\'t find sudo frontend command, switch disabled');
         if (!this.commands.glxinfo) this._log('can\'t find glxinfo command, gpu disabled');
         if (!this.commands.prime) this._log('can\'t find prime-select command, query/switch disabled');
         if (!this.commands.settings) this._log('can\'t find nvidia-settings command, settings disabled');
@@ -189,13 +187,10 @@ class Switch {
      * @return {Void}
      */
     switch(gpu, logout) {
-        if (!this.commands.sudo || !this.commands.prime)
-            return;
         if (this.query === gpu)
             return;
 
-        let command = this.commands.sudo
-             + ' ' + this.commands.bash
+        let command = this.commands.bash
              + ' ' + this.commands.switch
              + ' ' + gpu
              + (logout ? ' --logout' : '');

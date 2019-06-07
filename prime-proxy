@@ -2,17 +2,9 @@
 
 # show usage
 function _help {
-    echo "Usage: prime-menu nvidia|intel|query [--logout]"
+    echo "Usage: $0 nvidia|intel|query [--logout]"
     if [ -n "$1" ]; then
         exit $1
-    fi
-}
-
-# check root privileges
-function _root {
-    if [ $EUID -ne 0 ]; then
-        echo "Error: This script must be run as root"
-        exit 1
     fi
 }
 
@@ -27,6 +19,16 @@ function _installed {
 # get prime-select command path
 function _which {
     which prime-select
+}
+
+# get prime-select command path
+function _service {
+    which systemctl || which service
+}
+
+# get prime-select command path
+function _sudo {
+    which pkexec || which gksudo
 }
 
 # get display manager service path
@@ -47,15 +49,13 @@ function _query {
 # select intel gpu
 function _intel {
     _installed
-    _root
-    `_which` intel
+    `_sudo` `_which` intel
 }
 
 # select nvidia gpu
 function _nvidia {
     _installed
-    _root
-    `_which` nvidia
+    `_sudo` `_which` nvidia
 }
 
 # restart display manager
@@ -66,9 +66,8 @@ function _restart {
         exit 0
     fi
 
-    _root
     CMD="${CMD##*/}"
-    service $CMD restart
+    `_service` $CMD restart
 }
 
 # what to do
